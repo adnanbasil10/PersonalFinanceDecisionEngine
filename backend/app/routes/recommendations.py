@@ -29,22 +29,23 @@ def get_recommendations(
     if df.empty:
         raise HTTPException(status_code=404, detail="No transactions found. Upload data first.")
 
-    # Load ML models
+    # Load ML models (Graceful fallback if missing)
     from app.ml.risk_predictor import OverspendRiskPredictor
     from app.ml.forecaster import SpendingForecaster
+
+    risk_prediction = {"overspend_probability": 0, "risk_level": "unknown"}
+    forecast_result = {"total_predicted": 0, "forecast_days": 30}
 
     try:
         risk_predictor = OverspendRiskPredictor.load()
         forecaster = SpendingForecaster.load()
-    except FileNotFoundError:
-        raise HTTPException(
-            status_code=503,
-            detail="ML models not trained yet. Run 'python -m app.ml.train' first.",
-        )
+        
+        # Get ML predictions
+        risk_prediction = risk_predictor.predict(df, current_user.monthly_income)
+        forecast_result = forecaster.predict(df, days=30)
+    except Exception as e:
+        print(f"Decision Engine warning: Running in heuristic-only mode (Models missing: {e})")
 
-    # Get ML predictions
-    risk_prediction = risk_predictor.predict(df, current_user.monthly_income)
-    forecast_result = forecaster.predict(df, days=30)
 
     # Run decision engine
     engine = DecisionEngine(monthly_income=current_user.monthly_income)
