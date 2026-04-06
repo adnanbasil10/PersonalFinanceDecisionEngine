@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+*.whl
+venv/
+env/
+.venv/
+
+# ML Models
+backend/app/ml/saved_models/*.joblib
+backend/app/ml/saved_models/*.json
+backend/app/ml/saved_models/*.pkl
+
+# Environment
+.env
+.env.local
+.env.production
+.env.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+.next/
+out/
+frontend/.next/
+frontend/node_modules/
+
+# Docker
+*.log
+
+# Database
+*.db
+*.sqlite3
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Internal Docs
+EXPLANATION.md
