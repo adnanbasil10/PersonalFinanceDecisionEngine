@@ -107,10 +107,12 @@ python populate_demo_data.py
 
 ---
 
-## 💡 Future Improvements
-1. **Redis Caching:** Implementation of aggressive Redis caching across the `/predict` endpoints to drop chart-render latency to `<50ms` for massive 10,000+ row bank statements.
-2. **WebSocket Asynchrony:** Pipe the CSV uploader through FastApi WebSockets for real-time processing bars on extreme uploads.
-3. **Plaid Integration:** Direct connections to bank architectures to bypass manual CSV drops.
+## 💡 Future Improvements & Scaling
+
+1. **Enterprise Scaling (10,000+ Users):** To handle high-concurrency environments, the next phase involves implementing **Redis caching** between the PostgreSQL database and FastAPI over the `/predict` endpoints, and offloading the XGBoost/Prophet training loops to an **asynchronous queue like Celery** to ensure the primary web thread remains non-blocking.
+2. **WebSocket Asynchrony:** Transition the CSV uploader to FastAPI WebSockets for real-time progress tracking on large-scale bank statement ingestion.
+3. **Plaid/Open Banking Integration:** Direct API connections to global banking architectures to bypass manual CSV uploads and provide real-time automated forecasting.
+4. **Read Replicas:** Scale the database layer using Postgres Read Replicas to offload read-heavy dashboard queries from the primary write instance.
 
 ---
 
