@@ -1,0 +1,10 @@
+{
+  "model_type": "regression_fallback",
+  "metrics": {
+    "forecast_rmse": 0.0,
+    "forecast_mape": 0.0,
+    "model_type": "regression_fallback",
+    "training_days": 324,
+    "test_days": 30
+  }
+}

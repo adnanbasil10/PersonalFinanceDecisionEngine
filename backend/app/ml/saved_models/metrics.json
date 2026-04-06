@@ -1,0 +1,22 @@
+{
+  "classifier_accuracy": 0.987,
+  "classifier_f1_macro": 0.9776,
+  "n_classes": 16,
+  "n_samples": 4015,
+  "n_features": 11,
+  "risk_accuracy": 1.0,
+  "risk_f1": 0.0,
+  "risk_precision": 0.0,
+  "risk_recall": 0.0,
+  "risk_auc_roc": 0.5,
+  "n_months": 12,
+  "overspend_rate": 1.0,
+  "forecast_rmse": 0.0,
+  "forecast_mape": 0.0,
+  "model_type": "regression_fallback",
+  "training_days": 324,
+  "test_days": 30,
+  "monthly_income": 75000,
+  "total_transactions": 4015,
+  "training_time_seconds": 13.05
+}
