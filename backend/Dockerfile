@@ -17,8 +17,14 @@ COPY --from=builder /install /usr/local
 COPY . .
 
 # Create non-root user
-RUN adduser --disabled-password --gecos "" appuser
+RUN adduser --disabled-password --gecos "" appuser && \
+    mkdir -p /app/app/ml/saved_models && \
+    chown -R appuser:appuser /app
+
 USER appuser
+
+# Pre-train ML models on synthetic data inside the container
+RUN python -m app.ml.train
 
 # Expose port
 EXPOSE 8000

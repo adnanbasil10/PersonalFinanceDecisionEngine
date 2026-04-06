@@ -70,6 +70,17 @@ app.add_middleware(
 )
 
 
+@app.get("/", tags=["Health"])
+def root():
+    """Welcome message for the API root."""
+    return {
+        "message": f"Welcome to the {settings.APP_NAME} API",
+        "version": settings.APP_VERSION,
+        "docs": "/docs",
+        "status": "active"
+    }
+
+
 # Health check
 @app.get("/health", tags=["Health"])
 def health_check():
