@@ -36,14 +36,26 @@ class Settings(BaseSettings):
 
     @property
     def effective_database_url(self) -> str:
-        """Return SQLite URL if fallback is enabled or Postgres is unavailable."""
+        """Return SQLite URL or cleaned Postgres URL."""
         if self.SQLITE_FALLBACK:
             db_path = os.path.join(
                 os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
                 "finance_engine.db",
             )
             return f"sqlite:///{db_path}"
-        return self.DATABASE_URL
+
+        # Production hardening: Clean up common copy-paste errors
+        url = self.DATABASE_URL.strip(" '\"")
+
+        # Fix "psql 'postgres://...'" prefix error
+        if url.startswith("psql "):
+            url = url.replace("psql ", "", 1).strip(" '\"")
+
+        # SQLAlchemy 1.4+ requires "postgresql://" instead of "postgres://"
+        if url.startswith("postgres://"):
+            url = url.replace("postgres://", "postgresql://", 1)
+
+        return url
 
     model_config = {
         "env_file": ".env",
